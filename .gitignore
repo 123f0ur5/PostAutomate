@@ -1,8 +1,8 @@
 # Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
+static
+media
+db.sqlite3
+
 
 # Other files and folders
 .settings/
