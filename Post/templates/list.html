@@ -1,0 +1,21 @@
+{% include 'home.html' %}
+
+
+{% block content %}
+{% if req_user == post.user %}
+<h1>Título: {{ post.title }}</h1>
+Texto: {{ post.text }}<br>
+{% if post.image %}
+Image: <img src={{ post.image.url }}><br>
+{% else %}
+Image: No image uploaded<br>
+{% endif %}
+Post Date: {{ post.post_date }}<br>
+Instagram: {{ post.instagram }}<br>
+Facebook: {{ post.facebook }}<br>
+Twitter: {{ post.twitter }}<br>
+{% else %}
+You don't have access<br>
+<a href="{% url 'home' %}"><button type="button" name="cancel">Go back</button></a>
+{% endif %}
+{% endblock %}

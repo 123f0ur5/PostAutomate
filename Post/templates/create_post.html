@@ -1,0 +1,9 @@
+{% include 'home.html' %}
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+	{{ my_post.as_p }}
+<a href="{% url 'home' %}"><button type="button" name="cancel">Cancel</button></a>
+<input type="submit" name="save" value="Schedule">
+</form> 
+{% endblock %}
