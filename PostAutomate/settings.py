@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
 from pathlib import Path, PurePath
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -18,7 +17,7 @@ STATIC_ROOT = PurePath.joinpath(BASE_DIR, 'static')
 STATIC_DIR = PurePath.joinpath(BASE_DIR, 'static/')
 MEDIA_ROOT= PurePath.joinpath(BASE_DIR,'media/')
 MEDIA_URL='/media/'
-
+CSRF_TRUSTED_ORIGINS = ['https://*.0741-2804-e8-8093-8d00-a405-72d0-b183-97df.sa.ngrok.io']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -29,7 +28,7 @@ SECRET_KEY = 'django-insecure-exgyb6jxe%11$9_@5x1gg8zd8wjwwo4%omi4*2vhcw813brofs
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', "www.localhost", '0741-2804-e8-8093-8d00-a405-72d0-b183-97df.sa.ngrok.io']
 
 
 # Application definition
@@ -41,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #3rdparty
+    'social_django',
+    #Mine
     'Post',
     'User',
 ]
@@ -53,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'PostAutomate.urls'
@@ -68,6 +72,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -85,6 +92,13 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 
 # Password validation
@@ -122,8 +136,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+BASE_URL = "http://localhost:8000"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'home'
+
+
+SOCIAL_AUTH_TWITTER_KEY = 'C9RySX4vyLpYW5Ho0j3ObUCcK'
+SOCIAL_AUTH_TWITTER_SECRET = 'xRqlrOws0a89dn5xj1ENSdI6bstLn82X5r57JToaSuHFjAd6tm'
+SOCIAL_AUTH_FACEBOOK_KEY = '402323638646283'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '2fe4aef7eab54ae3173965d532b5d4ad'  # App Secret

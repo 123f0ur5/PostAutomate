@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from .forms import PostForm
 from .models import Post
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from social_django.models import UserSocialAuth
 
 #Create your views here.
 @login_required
@@ -35,4 +37,14 @@ def list_view(request, my_id):
 		'req_user' : req_user,
 	}
 
-	return render(request, "list.html", context)	
+	return render(request, "list.html", context)
+
+@login_required
+def view_facebook(request):
+	user = UserSocialAuth.objects.all()
+	print(user.values())
+	context = {
+		'user' : user,
+	}
+
+	return render(request, "teste.html", context)
